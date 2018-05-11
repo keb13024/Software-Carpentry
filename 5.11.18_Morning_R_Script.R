@@ -140,3 +140,4 @@ ggplot(data=gap, aes(x=gdpPercap,y=lifeExp,color=continent))+
   geom_smooth(method="lm")+
   facet_wrap(~year)
 
+#practice

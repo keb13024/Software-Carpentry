@@ -101,3 +101,18 @@ wide<-gap_long%>%
   unite(var_names,obs_type,year,sep="_")%>%  #undo the separate
   spread(var_names,obs_values)             #fewer rows, many columns
 head(wide)
+
+##Databases in R##
+
+install.packages("RSQLite")
+library("RSQLite")
+library("DBI")
+
+conn<-dbConnect(drv=SQLite(),dbname="data/survey.db") #connect to db
+
+dbListTables(conn)
+dbListFields(conn,"Survey")
+
+##Queries in R
+
+coords<-dbGetQuery(conn,"SELECT lat,long FROM Site;") #write the SQL query in the quotes

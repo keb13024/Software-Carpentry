@@ -116,3 +116,30 @@ dbListFields(conn,"Survey")
 ##Queries in R
 
 coords<-dbGetQuery(conn,"SELECT lat,long FROM Site;") #write the SQL query in the quotes
+joined_data<-dbGetQuery(conn,
+  "SELECT Site.lat, Site.long, Visited.dated
+  FROM Site JOIN Visited
+  ON Site.name = Visited.Site;")
+joined_data
+
+#Select queries in dplyr allows you to not use SQL
+
+library(dplyr)
+install.packages("dbplyr")
+library(dbplyr)
+library(ggplot2)
+
+tbl(conn,"Survey")%>%
+  select(person,quant,reading)%>%
+  filter(quant=="sal")
+    #only gives preview of data
+
+tbl(conn,"Survey")%>%
+  select(person,quant,reading)%>%
+  filter(quant=="sal")%>%
+  collect()%>%
+  ggplot(aes(x=person,y=reading))+
+    geom_boxplot()
+
+#Disconnect (NEED TO DO THIS WHEN YOU ARE DONE WORKING WITH DB)
+dbDisconnect(conn)

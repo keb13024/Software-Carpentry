@@ -139,3 +139,4 @@ ggplot(data=gap, aes(x=gdpPercap,y=lifeExp,color=continent))+
   scale_x_log10()+
   geom_smooth(method="lm")+
   facet_wrap(~year)
+
